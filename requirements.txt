@@ -16,6 +16,7 @@ curl_cffi==0.13.0
 cycler==0.12.1
 databricks-sdk==0.73.0
 docker==7.1.0
+docopt==0.6.2
 fastapi==0.124.0
 filelock==3.20.0
 Flask==3.1.2
@@ -59,6 +60,7 @@ pandas==2.3.3
 pandas-ta==0.4.71b0
 peewee==3.18.3
 pillow==12.0.0
+pipreqs==0.4.13
 platformdirs==4.5.1
 protobuf==6.33.2
 pyarrow==22.0.0
@@ -94,5 +96,6 @@ urllib3==2.6.1
 uvicorn==0.38.0
 websockets==15.0.1
 Werkzeug==3.1.4
+yarg==0.1.10
 yfinance==0.2.66
 zipp==3.23.0
