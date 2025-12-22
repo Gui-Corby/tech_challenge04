@@ -26,6 +26,7 @@ from config import (
     SCALER_VOLUME_PATH)
 
 from lstm_model import LSTMRegressor
+from evaluate import evaluate
 
 
 mlflow.set_experiment("lstm_stock_forecast")
@@ -73,7 +74,7 @@ def call_model(lr=1e-3, num_epochs=50, seq_length=SEQ_LENGTH,  # Need to fix thi
         mlflow.log_param("learning_rate", lr)
         mlflow.log_param("num_epochs", num_epochs)
         mlflow.log_param("model_path", model_path)
-        mlflow.log_param("seq_length", SEQ_LENGTH)
+        mlflow.log_param("seq_length", seq_length)
 
         X_train_seq, y_train_seq = create_sequences(X_train, y_train, seq_length)
         X_test_seq, y_test_seq = create_sequences(X_test, y_test, seq_length)
@@ -88,6 +89,7 @@ def call_model(lr=1e-3, num_epochs=50, seq_length=SEQ_LENGTH,  # Need to fix thi
         y_naive = torch.tensor(y_test_seq[:-1], dtype=torch.float32)
 
         baseline_naive_mse = torch.mean((y_naive - y_true) ** 2).item()
+        mlflow.log_metric("baseline_naive_test_mse", baseline_naive_mse)
 
         train_loader, test_loader = make_dataloaders(
             X_train_tensor, y_train_tensor,
@@ -131,53 +133,23 @@ def call_model(lr=1e-3, num_epochs=50, seq_length=SEQ_LENGTH,  # Need to fix thi
         print(f"\nBaseline ZERO test MSE: {baseline_zero_mse:.6f}")
         print(f"\nBaseline naive: {baseline_naive_mse:.6f}")
 
-        model.eval()
-        test_loss = 0.0
+        metrics = evaluate(
+            model=model,
+            test_loader=test_loader,
+            criterion=criterion,
+            device=device,
+            scaler_price=scaler_price,
+            cols_price=COLS_PRICE
+        )
 
-        close_idx = COLS_PRICE.index("Close")
-        mu = float(scaler_price.mean_[close_idx])
-        sigma = float(scaler_price.scale_[close_idx])
-
-        sum_abs_usd = 0.0
-        sum_sq_usd = 0.0
-        n = 0
-
-        with torch.no_grad():
-            for X_batch, y_batch in test_loader:
-                X_batch = X_batch.to(device)
-                y_batch = y_batch.to(device)
-
-                y_pred = model(X_batch)
-
-                loss = criterion(y_pred, y_batch)
-                test_loss += loss.item() * X_batch.size(0)
-
-                # shapes: (batch, 1) -> (batch,)
-                y_pred_scaled = y_pred.squeeze(1)
-                y_true_scaled = y_batch.squeeze(1)
-
-                # back tou USD
-                y_pred_usd = y_pred_scaled * sigma + mu
-                y_true_usd = y_true_scaled * sigma + mu
-
-                diff = y_pred_usd - y_true_usd
-                sum_abs_usd += diff.abs().sum().item()
-                sum_sq_usd += (diff ** 2).sum().item()
-                n += y_true_usd.numel()
-
-        test_loss /= len(test_loader.dataset)
-
-        test_mae_usd = sum_abs_usd / n
-        test_rmse_usd = (sum_sq_usd / n) ** 0.5
-
-        print(f"\nTest MSE (scaled): {test_loss:.6f}")
-        print(f"Test MAE (USD): {test_mae_usd:.4f}")
-        print(f"Test RMSE (USD): {test_rmse_usd:.4f}")
+        print(f"\nTest MSE (scaled): {metrics['test_mse_scaled']:.6f}")
+        print(f"Test MAE (USD): {metrics['test_mae_usd']:.4f}")
+        print(f"Test RMSE (USD): {metrics['test_rmse_usd']:.4f}")
 
         mlflow.pytorch.log_model(model, "model")
-        mlflow.log_metric("test_mse", test_loss)
-        mlflow.log_metric("test_mae_usd", test_mae_usd)
-        mlflow.log_metric("test_rmse_usd", test_rmse_usd)
+        mlflow.log_metric("test_mse_scaled", metrics["test_mse_scaled"])
+        mlflow.log_metric("test_mae_usd", metrics["test_mae_usd"])
+        mlflow.log_metric("test_rmse_usd", metrics["test_rmse_usd"])
 
     return model
 
