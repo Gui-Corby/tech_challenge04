@@ -130,9 +130,6 @@ def call_model(lr=1e-3, num_epochs=50, seq_length=SEQ_LENGTH,  # Need to fix thi
                 best_loss = epoch_loss
                 torch.save(model.state_dict(), model_path)
 
-        print(f"\nBaseline ZERO test MSE: {baseline_zero_mse:.6f}")
-        print(f"\nBaseline naive: {baseline_naive_mse:.6f}")
-
         metrics = evaluate(
             model=model,
             test_loader=test_loader,
@@ -142,9 +139,12 @@ def call_model(lr=1e-3, num_epochs=50, seq_length=SEQ_LENGTH,  # Need to fix thi
             cols_price=COLS_PRICE
         )
 
+        print("\n--- Evaluation summary ---")
+        print(f"\nBaseline ZERO test MSE: {baseline_zero_mse:.6f}")
+        print(f"\nBaseline naive: {baseline_naive_mse:.6f}")
         print(f"\nTest MSE (scaled): {metrics['test_mse_scaled']:.6f}")
-        print(f"Test MAE (USD): {metrics['test_mae_usd']:.4f}")
-        print(f"Test RMSE (USD): {metrics['test_rmse_usd']:.4f}")
+        print(f"\nTest MAE (USD): {metrics['test_mae_usd']:.4f}")
+        print(f"\nTest RMSE (USD): {metrics['test_rmse_usd']:.4f}")
 
         mlflow.pytorch.log_model(model, "model")
         mlflow.log_metric("test_mse_scaled", metrics["test_mse_scaled"])
