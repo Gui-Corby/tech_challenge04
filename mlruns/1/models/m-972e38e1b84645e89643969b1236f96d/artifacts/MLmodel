@@ -1,0 +1,23 @@
+artifact_path: /Users/gui/Desktop/tech_challenge4/mlruns/1/models/m-972e38e1b84645e89643969b1236f96d/artifacts
+flavors:
+  python_function:
+    config:
+      device: null
+    data: data
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.pytorch
+    pickle_module_name: mlflow.pytorch.pickle_module
+    python_version: 3.13.3
+  pytorch:
+    code: null
+    model_data: data
+    pytorch_version: 2.9.1
+mlflow_version: 3.7.0
+model_id: m-972e38e1b84645e89643969b1236f96d
+model_size_bytes: 211905
+model_uuid: m-972e38e1b84645e89643969b1236f96d
+prompts: null
+run_id: 4d56061f84ad4cb8bf99de6ee13c7acd
+utc_time_created: '2025-12-30 12:40:44.264768'

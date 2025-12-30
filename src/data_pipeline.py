@@ -1,5 +1,5 @@
 import pandas as pd
-import pandas_ta as ta
+# import pandas_ta as ta
 import numpy as np
 import yfinance as yf
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
@@ -22,16 +22,32 @@ def load_data() -> pd.DataFrame:
     return df
 
 
+def compute_rsi(series: pd.Series, window: int = 14) -> pd.Series:
+    delta = series.diff()
+
+    gain = delta.clip(lower=0)
+    loss = -delta.clip(upper=0)
+
+    avg_gain = gain.rolling(window=window).mean()
+    avg_loss = loss.rolling(window=window).mean()
+
+    rs = avg_gain / avg_loss
+    rsi = 100 - (100 / (1 + rs))
+
+    return rsi
+
+
 # Create features
 def create_features(df: pd.DataFrame) -> pd.DataFrame:
     """Create features like RSI, SMA, Volume_log"""
 
     df = df.copy()
+
     # 10-period Simple Moving Average (SMA)
-    df['SMA'] = ta.sma(df['Close'], length=10)
+    df['SMA'] = df["Close"].rolling(window=10).mean()
 
     # 14-period Relative Strength Index (RSI)
-    df['RSI'] = ta.rsi(df['Close'], length=14)
+    df['RSI'] = compute_rsi(df['Close'], window=14)
 
     # Applying logarithm to volume values
     df['Volume_log'] = np.log1p(df['Volume'])
