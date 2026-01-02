@@ -126,9 +126,7 @@ source .venv/bin/activate   # Linux / macOS
 
 ### 3) Run the API
 From the project root directory:
-```bash
 `uvicorn src.main:app --reload`
-```
 
 ### 4) Access the application
 API root (health check):
