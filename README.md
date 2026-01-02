@@ -119,21 +119,22 @@ The API includes **basic production-style monitoring**, exposing **Prometheus-co
 python -m venv .venv
 source .venv/bin/activate   # Linux / macOS
 # .venv\Scripts\activate    # Windows
+```
 
 ### 2) Install dependencies
-pip install -r requirements.txt
+`pip install -r requirements.txt`
 
 ### 3) Run the API
 From the project root directory:
 ```bash
-uvicorn src.main:app --reload
+`uvicorn src.main:app --reload`
 
 ### 4) Access the application
 API root (health check):
-http://127.0.0.1:8000/
+`http://127.0.0.1:8000/`
 
 Interactive API documentation (Swagger UI):
-http://127.0.0.1:8000/docs
+`http://127.0.0.1:8000/docs`
 
 Monitoring metrics (Prometheus format):
-http://127.0.0.1:8000/metrics
+`http://127.0.0.1:8000/metrics`
