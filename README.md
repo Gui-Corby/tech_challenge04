@@ -86,7 +86,7 @@ Generates a **one-step-ahead price prediction** based on historical data.
     }
   ]
 }
-
+```
 
 **Example response**:
 ```json
@@ -99,11 +99,11 @@ Generates a **one-step-ahead price prediction** based on historical data.
 
 Where:
 
-predicted_close is the model’s one-step-ahead forecast
+- `predicted_close` is the model’s one-step-ahead forecast
 
-last_close is the most recent observed closing price
+- `last_close` is the most recent observed closing price
 
-latency_ms is the end-to-end inference latency measured at request time
+- `latency_ms` is the end-to-end inference latency measured at request time
 
 
 ## Monitoring & Observability
