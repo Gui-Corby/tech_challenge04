@@ -95,6 +95,7 @@ Generates a **one-step-ahead price prediction** based on historical data.
   "last_close": 292.6,
   "latency_ms": 11.162541020894423
 }
+```
 
 Where:
 
