@@ -97,9 +97,12 @@ Generates a **one-step-ahead price prediction** based on historical data.
 }
 
 Where:
-- `predicted_close` is the model’s one-step-ahead forecast
-- `last_close` is the most recent observed closing price
-- `latency_ms` is the end-to-end inference latency measured at request time
+
+predicted_close is the model’s one-step-ahead forecast
+
+last_close is the most recent observed closing price
+
+latency_ms is the end-to-end inference latency measured at request time
 
 
 ## Monitoring & Observability
@@ -117,7 +120,7 @@ source .venv/bin/activate   # Linux / macOS
 # .venv\Scripts\activate    # Windows
 
 ### 2) Install dependencies
-pip install -r requirementes.txt
+pip install -r requirements.txt
 
 ### 3) Run the API
 From the project root directory:
