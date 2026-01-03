@@ -137,3 +137,16 @@ Interactive API documentation (Swagger UI):
 
 Monitoring metrics (Prometheus format):
 `http://127.0.0.1:8000/metrics`
+
+
+## Next steps
+
+While this project demonstrates a complete and coherent pipeline for stock price forecasting, from data preprocessing and model training to API deployment and monitoring, there are several directions for future improvements.
+
+First, although the model outperforms simple baselines, the absolute prediction error (MAE and RMSE in USD) remains relatively high. This is expected given the highly noisy, non-stationary nature of financial time series and the fact that the model relies exclusively on price-derived features. Future work could incorporate additional exogenous variables, such as market indices, macroeconomic indicators, or cross-asset information, to improve predictive performance.
+
+Second, the current implementation focuses on one-step-ahead point forecasts. Extending the model to multi-step forecasting or probabilistic outputs (e.g., confidence intervals) could provide more informative predictions for real-world use cases.
+
+Third, hyperparameter exploration in this project was limited to a small grid of learning rates and sequence lengths. More systematic optimization strategies, such as Bayesian optimization or rolling-window cross-validation, could be applied to further refine the model.
+
+Finally, from a production perspective, future iterations could enhance model monitoring by tracking prediction drift and performance degradation over time, as well as implementing automated retraining strategies to adapt the model to changing market regimes.
