@@ -68,7 +68,7 @@ device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cp
 # print(device)
 
 
-def call_model(lr=1e-3, num_epochs=50, seq_length=SEQ_LENGTH,  # Need to fix this seq_lenght!
+def call_model(lr=1e-3, num_epochs=50, seq_length=SEQ_LENGTH,
                model_path=MODEL_PATH):
     with mlflow.start_run():
         mlflow.log_param("learning_rate", lr)
@@ -140,6 +140,19 @@ def call_model(lr=1e-3, num_epochs=50, seq_length=SEQ_LENGTH,  # Need to fix thi
         )
 
         print("\n--- Evaluation summary ---")
+
+        print(
+            "Baseline ZERO: trivial reference that always output 0 in the "
+            "normalized scale, which corresponds to predicting the historical mean "
+            "price in the original scale."
+        )
+
+        print(
+            "Baseline NAIVE: persistence baseline that predicts the next price "
+            "as equal to the last observed price (y_t = y_{t-1}), "
+            "used to test wether the model learns beyond price inertia."
+        )
+
         print(f"\nBaseline ZERO test MSE: {baseline_zero_mse:.6f}")
         print(f"\nBaseline naive: {baseline_naive_mse:.6f}")
         print(f"\nTest MSE (scaled): {metrics['test_mse_scaled']:.6f}")

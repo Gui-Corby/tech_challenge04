@@ -1,0 +1,22 @@
+# OS / editor
+.DS_Store
+.vscode/
+.idea/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+venv/
+
+# MLflow
+mlruns/
+mlflow.db
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Artifacts/logs
+*.log
