@@ -6,16 +6,16 @@ import joblib
 import torch
 import torch.nn as nn
 from mlflow.tracking import MlflowClient
-from data_pipeline import (load_data,
-                           create_features,
-                           drop_null,
-                           fit_scalers,
-                           transform_scalers,
-                           create_sequences,
-                           to_tensors,
-                           make_dataloaders)
+from src.data_pipeline import (load_data,
+                               create_features,
+                               drop_null,
+                               fit_scalers,
+                               transform_scalers,
+                               create_sequences,
+                               to_tensors,
+                               make_dataloaders)
 
-from config import (
+from src.config import (
     COLS_PRICE,
     COL_VOLUME,
     FEATURE_COLS,

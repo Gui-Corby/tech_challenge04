@@ -22,8 +22,8 @@ def evaluate(model, test_loader, criterion, device, scaler_price, cols_price):
             loss = criterion(y_pred, y_batch)
             test_loss += loss.item() * X_batch.size(0)
 
-            y_pred_scaled = y_pred.squeeze(0)
-            y_true_scaled = y_batch.squeeze(0)
+            y_pred_scaled = y_pred.view(-1)
+            y_true_scaled = y_batch.view(-1)
 
             y_pred_usd = y_pred_scaled * sigma + mu
             y_true_usd = y_true_scaled * sigma + mu

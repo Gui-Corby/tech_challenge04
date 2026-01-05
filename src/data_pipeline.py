@@ -5,13 +5,18 @@ import yfinance as yf
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
 import torch
 from torch.utils.data import TensorDataset, DataLoader
+from src.config import (
+    SYMBOL,
+    START_DATE,
+    END_DATE
+)
 
 
 # Load data
 def load_data() -> pd.DataFrame:
-    symbol = "TSLA"  # Tesla, Inc
-    start_date = "2023-01-01"
-    end_date = "2024-12-31"
+    symbol = SYMBOL  # Tesla, Inc
+    start_date = START_DATE
+    end_date = END_DATE
 
     df = yf.download(symbol, start=start_date, end=end_date)
     df.columns = ['_'.join(col).strip() for col in df.columns.values]
