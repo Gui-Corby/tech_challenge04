@@ -18,6 +18,9 @@ from src.config import (
     MODEL_PATH,
     SCALER_PRICE_PATH,
     SCALER_VOLUME_PATH,
+    MIN_CANDLES,
+    FEATURE_WARMUP,
+    RECOMMENDED_CANDLES
 )
 
 
@@ -87,12 +90,13 @@ def predict_stock(req: PredictRequest):
         raise HTTPException(
             status_code=400,
             detail=(
-                f"Not enough usable rows after feature engineering. "
-                f"Received {before} candles, but only {after} remain after computing "
-                f"technical indicators (e.g., SMA/RSI) and dropping initial NaNs. "
-                f"The model requires at least {SEQ_LENGTH} usable rows. "
-                f"Please provide more candles (recommended: 40+)."
-            )
+                "Insufficient historical data to generate a prediction. "
+                f"Received {before} candles, but only {after} remain after feature engineering. "
+                "Some technical indicators (e.g., SMA and RSI) require an initial warm-up period "
+                "and produce NaN values that are automatically discarded. "
+                f"The model requires at least {MIN_CANDLES} usable candles "
+                f"(sequence length = {SEQ_LENGTH}, indicator warm-up = {FEATURE_WARMUP}). "
+                f"Please provide more historical data (recommended: {RECOMMENDED_CANDLES}+ candles).")
         )
 
     # Scaling
