@@ -138,6 +138,12 @@ Interactive API documentation (Swagger UI):
 Monitoring metrics (Prometheus format):
 `http://127.0.0.1:8000/metrics`
 
+### Training the model (optional)
+
+To run the training script, execute it as a module from the project root:
+`python -m src.train`
+or
+`python3 -m src.train`
 
 ## Next steps
 

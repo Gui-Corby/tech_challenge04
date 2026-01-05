@@ -25,8 +25,8 @@ from src.config import (
     SCALER_PRICE_PATH,
     SCALER_VOLUME_PATH)
 
-from lstm_model import LSTMRegressor
-from evaluate import evaluate
+from src.lstm_model import LSTMRegressor
+from src.evaluate import evaluate
 
 
 mlflow.set_experiment("lstm_stock_forecast")
