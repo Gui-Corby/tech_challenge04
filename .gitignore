@@ -1,13 +1,10 @@
-# OS / editor
-.DS_Store
-.vscode/
-.idea/
-
 # Python
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
+
+# Virtual env
 .venv/
 venv/
 
@@ -15,8 +12,8 @@ venv/
 mlruns/
 mlflow.db
 
+# OS
+.DS_Store
+
 # Jupyter
 .ipynb_checkpoints/
-
-# Artifacts/logs
-*.log

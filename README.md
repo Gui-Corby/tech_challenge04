@@ -138,6 +138,38 @@ Interactive API documentation (Swagger UI):
 Monitoring metrics (Prometheus format):
 `http://127.0.0.1:8000/metrics`
 
+## Project Structure
+
+```text
+.
+├── LICENSE
+├── README.md                         # Project overview + instructions (run API, endpoints, metrics)
+├── requirements.txt                  # Python dependencies
+├── .gitignore                        # Ignore generated artifacts (mlruns/, __pycache__/, venv, etc.)
+├── models/
+│   ├── best_model.pth                # Final trained LSTM weights used by the API
+│   ├── scaler_price.joblib           # Scaler fitted on training price features (used in inference)
+│   └── scaler_volume.joblib          # Scaler fitted on training volume feature (used in inference)
+├── notebooks/
+│   └── tech_challenge04.ipynb        # Initial experimentation/EDA (not used in production API)
+└── src/
+    ├── __init__.py                   # Marks src as a package (enables `python -m src.train`)
+    ├── main.py                       # FastAPI app entrypoint; includes routers + monitoring middleware
+    ├── config.py                     # Central configuration (paths, symbol, seq_length, feature columns)
+    ├── data_pipeline.py              # Data ingestion + feature engineering (SMA, RSI, log volume) + scaling
+    ├── lstm_model.py                 # PyTorch LSTMRegressor definition
+    ├── train.py                      # Training loop + hyperparameter search + artifact saving
+    ├── evaluate.py                   # Evaluation metrics (MSE/MAE/RMSE) for model selection
+    ├── api/
+    │   └── future_price.py           # `POST /predict` endpoint (input validation + inference + latency)
+    └── monitoring/
+        ├── __init__.py
+        ├── metrics.py                # Prometheus metric definitions
+        ├── middleware.py             # Request latency + CPU/memory instrumentation
+        └── routes.py                 # `GET /metrics` endpoint
+
+
+
 ### Training the model (optional)
 
 To run the training script, execute it as a module from the project root:
