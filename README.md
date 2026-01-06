@@ -167,8 +167,7 @@ Monitoring metrics (Prometheus format):
         ├── metrics.py                # Prometheus metric definitions
         ├── middleware.py             # Request latency + CPU/memory instrumentation
         └── routes.py                 # `GET /metrics` endpoint
-
-
+```
 
 ### Training the model (optional)
 
