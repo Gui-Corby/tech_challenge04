@@ -104,7 +104,7 @@ Where:
 - `last_close` is the most recent observed closing price
 
 - `latency_ms` is the end-to-end inference latency measured at request time
-
+---
 
 ## Monitoring & Observability
 
@@ -138,6 +138,8 @@ Interactive API documentation (Swagger UI):
 Monitoring metrics (Prometheus format):
 `http://127.0.0.1:8000/metrics`
 
+---
+
 ## Project Structure
 
 ```text
@@ -169,6 +171,7 @@ Monitoring metrics (Prometheus format):
         └── routes.py                 # `GET /metrics` endpoint
 ```
 
+---
 ### Training the model (optional)
 
 To run the training script, execute it as a module from the project root:
@@ -176,6 +179,7 @@ To run the training script, execute it as a module from the project root:
 or
 `python3 -m src.train`
 
+---
 ## Next steps
 
 While this project demonstrates a complete and coherent pipeline for stock price forecasting, from data preprocessing and model training to API deployment and monitoring, there are several directions for future improvements.
