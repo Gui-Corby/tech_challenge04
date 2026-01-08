@@ -116,6 +116,9 @@ The API includes **basic production-style monitoring**, exposing **Prometheus-co
 ### 1) Create a virtual environment (optional but recommended)
 
 ```bash
+git clone https://github.com/Gui-Corby/tech_challenge04.git
+cd tech_challenge04
+
 python -m venv .venv
 source .venv/bin/activate   # Linux / macOS
 # .venv\Scripts\activate    # Windows
