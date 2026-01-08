@@ -1,17 +1,22 @@
 import pandas as pd
-import pandas_ta as ta
+# import pandas_ta as ta
 import numpy as np
 import yfinance as yf
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
 import torch
 from torch.utils.data import TensorDataset, DataLoader
+from src.config import (
+    SYMBOL,
+    START_DATE,
+    END_DATE
+)
 
 
 # Load data
 def load_data() -> pd.DataFrame:
-    symbol = "TSLA"  # Tesla, Inc
-    start_date = "2023-01-01"
-    end_date = "2024-12-31"
+    symbol = SYMBOL  # Tesla, Inc
+    start_date = START_DATE
+    end_date = END_DATE
 
     df = yf.download(symbol, start=start_date, end=end_date)
     df.columns = ['_'.join(col).strip() for col in df.columns.values]
@@ -22,16 +27,32 @@ def load_data() -> pd.DataFrame:
     return df
 
 
+def compute_rsi(series: pd.Series, window: int = 14) -> pd.Series:
+    delta = series.diff()
+
+    gain = delta.clip(lower=0)
+    loss = -delta.clip(upper=0)
+
+    avg_gain = gain.rolling(window=window).mean()
+    avg_loss = loss.rolling(window=window).mean()
+
+    rs = avg_gain / avg_loss
+    rsi = 100 - (100 / (1 + rs))
+
+    return rsi
+
+
 # Create features
 def create_features(df: pd.DataFrame) -> pd.DataFrame:
     """Create features like RSI, SMA, Volume_log"""
 
     df = df.copy()
+
     # 10-period Simple Moving Average (SMA)
-    df['SMA'] = ta.sma(df['Close'], length=10)
+    df['SMA'] = df["Close"].rolling(window=10).mean()
 
     # 14-period Relative Strength Index (RSI)
-    df['RSI'] = ta.rsi(df['Close'], length=14)
+    df['RSI'] = compute_rsi(df['Close'], window=14)
 
     # Applying logarithm to volume values
     df['Volume_log'] = np.log1p(df['Volume'])
@@ -90,7 +111,7 @@ def create_sequences(X, y, seq_length: int):
 
     for i in range(len(X) - seq_length):
         X_seq.append(X[i:i + seq_length])
-        y_seq.append(y[i+seq_length])
+        y_seq.append(y[i + seq_length])
 
     return np.array(X_seq), np.array(y_seq)
 

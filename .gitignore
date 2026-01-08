@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual env
+.venv/
+venv/
+
+# MLflow
+mlruns/
+mlflow.db
+
+# OS
+.DS_Store
+
+# Jupyter
+.ipynb_checkpoints/
