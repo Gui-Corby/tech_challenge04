@@ -18,6 +18,6 @@ MIN_CANDLES = SEQ_LENGTH + FEATURE_WARMUP
 
 RECOMMENDED_CANDLES = MIN_CANDLES + 10
 
-MODEL_PATH = "models/model_lr0.001_seq10.pth"
+MODEL_PATH = "models/best_model.pth"
 SCALER_PRICE_PATH = "models/scaler_price.joblib"
 SCALER_VOLUME_PATH = "models/scaler_volume.joblib"
