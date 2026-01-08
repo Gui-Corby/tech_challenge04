@@ -12,6 +12,8 @@ torch
 prometheus_client==0.23.1
 psutil==7.2.1
 
-yfinance==0.2.66
+#yfinance==0.2.66 # if necessary, use this version
+yfinance
+
 mlflow==3.7.0
 
