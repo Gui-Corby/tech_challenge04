@@ -123,6 +123,8 @@ source .venv/bin/activate   # Linux / macOS
 
 ### 2) Install dependencies
 `pip install -r requirements.txt`
+- Python **3.11** (recommended). Pytorch wheels may not be available for Python 3.13 on some systems.
+- If you are using Python 3.13 and `pip install torch` fails, please use Python 3.11 instead
 
 ### 3) Run the API
 From the project root directory:
