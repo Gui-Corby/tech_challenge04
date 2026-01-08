@@ -6,11 +6,9 @@ pandas==2.3.3
 numpy==2.2.6
 scikit-learn==1.7.2
 joblib==1.5.2
-yfinance==0.2.66
 
 torch
 
 prometheus_client==0.23.1
 psutil==7.2.1
 
-mlflow==3.7.0
