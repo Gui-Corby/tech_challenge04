@@ -12,3 +12,6 @@ torch
 prometheus_client==0.23.1
 psutil==7.2.1
 
+yfinance==0.2.66
+mlflow==3.7.0
+
